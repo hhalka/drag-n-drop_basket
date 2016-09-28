@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="simpleShop">
+    <head>
+        <meta charset="UTF-8">
+        <title>Test Task</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+        <script src="angular-drag-and-drop-lists.min.js"></script>
+        <script src="underscore-min.js"></script>
+        <script src="script.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body ng-controller="shopController as shop">
+        <div class="container fill">
+           <div class="row">
+               <div class="col-md-8 goods">
+                   <div class="panel panel-info">
+                       <div class="panel-heading">
+                           <h4>Our products</h1>
+                       </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li  ng-repeat="category in shop.categories" ng-include="'categoryTree'" ng-model="shop.categories"></li>
+                            </ul>
+                        </div>
+                   </div>
+                </div>
+
+                <script type="text/ng-template" id="categoryTree">
+                    {{category.name}}
+                    <ul ng-if="category.subcategories">
+                        <li ng-repeat="category in category.subcategories" ng-include="'categoryTree'"></li>
+                    </ul>
+                    <ul class="product-list" ng-if="category.products" dnd-list="shop.basket.bundles" dnd-dragover="external">
+                        <li class="product-item" ng-repeat="product in category.products" dnd-draggable="shop.createBundle(product)"
+                            dnd-effect-allowed="move"
+                            dnd-moved="category.products.splice($index, 1); shop.contentChecked = undefined;"
+                            ng-class="{selected: shop.selected === product}">
+                            {{product.name}}
+                        </li>
+                    </ul>
+                </script>
+
+                <div class="basket col-md-4">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4>Ware basket</h4>
+                            <p>just grag here item you want to bye</p>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group drop-zone" dnd-list="shop.basket.bundles" ng-model="shop.basket.bundles">
+                                <li ng-repeat="bundle in shop.basket.bundles" class="list-group-item"
+                                    ng-class="{'absent list-group-item-danger': shop.contentChecked === false && !bundle.available}">
+                                    <span>{{bundle.product.name}}</span>
+                                    <span class="remove" ng-click="shop.remove(bundle)">X</span>
+                                </li>
+                            </ul>
+                            <input class="btn btn-info" type="button" value="Check" ng-click="shop.checkContent()" />
+                            <input class="btn btn-success" type="button" value="Submit" ng-show="shop.contentChecked === true" ng-click="shop.submitPurchase()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

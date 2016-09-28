@@ -1,0 +1,83 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: "Open Sans";
+}
+
+.basket {
+    vertical-align: bottom !important;
+    min-width: 400px;
+}
+
+.basket ul {
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.fill { 
+    min-height: 100%;
+    height: 100%;
+}
+
+.row {
+    display: table;
+    width: 100%;
+    height: inherit;
+}
+
+[class*="col-"] {
+  float: none;
+  display: table-cell;
+  vertical-align: top;
+}
+
+.drop-zone {
+    min-height: 100px;
+    list-style-type: none;
+    border: 1px dashed #e1e1e8;
+    background-color: #f7f7f9;
+    border-radius: 4px;
+}
+
+
+.product-list > .product-item {
+    list-style-type: none;
+    padding: 2px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    list-style-image: url(trolley.png)
+}
+
+.product-item + .product-item, .product-item:first-child {
+    margin-top: 5px;
+}
+
+.product-item:last-child {
+    margin-bottom: 5px;
+}
+
+ul {
+    position: relative;
+}
+.remove {
+    float: right;
+}
+.orderForm {
+    position: relative;
+}
+
+.absent:after {
+    content: " (Not Available!)";
+}
+
+.goods {
+    padding-top: 20px;
+    padding-right: 150px;
+}
+
+.goods h4 {
+    text-align: center;
+}
